@@ -1,0 +1,1132 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Para Tita 🐾</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=Lora:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet" />
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --cream: #fdf6ee;
+    --warm: #f5e6d3;
+    --rose: #e8c4b8;
+    --rose-dark: #c9886e;
+    --brown: #7a4f3a;
+    --brown-light: #a67c5b;
+    --ink: #3d2b1f;
+    --gold: #c9a55a;
+    --gold-light: #e8d5a3;
+    --text: #4a3728;
+  }
+
+  body {
+    background: var(--cream);
+    font-family: 'Lora', Georgia, serif;
+    color: var(--text);
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* ── INTRO SCREEN ── */
+  #intro {
+    position: fixed;
+    inset: 0;
+    background: var(--cream);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+    transition: opacity 0.8s ease, transform 0.8s ease;
+  }
+  #intro.fade-out {
+    opacity: 0;
+    transform: scale(1.04);
+    pointer-events: none;
+  }
+
+  .snoopy-scene {
+    position: relative;
+    width: 340px;
+    height: 260px;
+    margin-bottom: 2rem;
+  }
+
+  /* Peanuts-style paw prints path */
+  .paw-trail {
+    position: absolute;
+    bottom: 10px;
+    left: 0;
+    width: 100%;
+  }
+
+  /* SVG dog figures */
+  .dog-float {
+    animation: floatDog 3s ease-in-out infinite;
+  }
+  .dog-float-2 {
+    animation: floatDog 3s ease-in-out infinite;
+    animation-delay: -1.5s;
+  }
+
+  @keyframes floatDog {
+    0%, 100% { transform: translateY(0px); }
+    50% { transform: translateY(-10px); }
+  }
+
+  @keyframes walkIn {
+    from { transform: translateX(-120px); opacity: 0; }
+    to { transform: translateX(0); opacity: 1; }
+  }
+  @keyframes walkIn2 {
+    from { transform: translateX(120px); opacity: 0; }
+    to { transform: translateX(0); opacity: 1; }
+  }
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes heartBeat {
+    0%, 100% { transform: scale(1); }
+    14% { transform: scale(1.15); }
+    28% { transform: scale(1); }
+    42% { transform: scale(1.1); }
+    56% { transform: scale(1); }
+  }
+  @keyframes pawPrint {
+    0% { opacity: 0; transform: scale(0) rotate(-20deg); }
+    60% { opacity: 1; transform: scale(1.2) rotate(-20deg); }
+    100% { opacity: 0.6; transform: scale(1) rotate(-20deg); }
+  }
+  @keyframes spin {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+  }
+  @keyframes shimmer {
+    0%, 100% { opacity: 0.4; }
+    50% { opacity: 1; }
+  }
+
+  .dog-left {
+    position: absolute;
+    left: 20px;
+    bottom: 50px;
+    animation: walkIn 1s ease forwards, floatDog 3s ease-in-out 1s infinite;
+  }
+  .dog-right {
+    position: absolute;
+    right: 20px;
+    bottom: 50px;
+    animation: walkIn2 1s ease 0.3s forwards, floatDog 3s ease-in-out 1.5s infinite;
+    opacity: 0;
+  }
+  .dog-center {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    bottom: 50px;
+    animation: fadeUp 1s ease 0.6s forwards;
+    opacity: 0;
+  }
+
+  .intro-title {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: clamp(2.4rem, 8vw, 3.8rem);
+    font-style: italic;
+    color: var(--brown);
+    text-align: center;
+    animation: fadeUp 1s ease 1.2s forwards;
+    opacity: 0;
+    line-height: 1.2;
+    letter-spacing: -0.5px;
+  }
+
+  .intro-subtitle {
+    font-size: 1.1rem;
+    color: var(--brown-light);
+    margin-top: 0.6rem;
+    animation: fadeUp 1s ease 1.6s forwards;
+    opacity: 0;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    font-style: normal;
+    font-family: 'Lora', serif;
+    font-weight: 400;
+  }
+
+  .hearts-row {
+    display: flex;
+    gap: 8px;
+    margin-top: 1.2rem;
+    animation: fadeUp 1s ease 1.8s forwards;
+    opacity: 0;
+  }
+
+  .heart {
+    color: var(--rose-dark);
+    font-size: 1.2rem;
+    animation: heartBeat 2s ease-in-out infinite;
+  }
+  .heart:nth-child(2) { animation-delay: 0.3s; }
+  .heart:nth-child(3) { animation-delay: 0.6s; }
+
+  .btn-enter {
+    margin-top: 2.5rem;
+    padding: 1rem 2.8rem;
+    background: transparent;
+    border: 2px solid var(--brown);
+    color: var(--brown);
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: 1.15rem;
+    font-style: italic;
+    cursor: pointer;
+    border-radius: 50px;
+    transition: all 0.3s ease;
+    animation: fadeUp 1s ease 2.2s forwards;
+    opacity: 0;
+    letter-spacing: 0.5px;
+    position: relative;
+    overflow: hidden;
+  }
+  .btn-enter::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: var(--brown);
+    transform: translateX(-100%);
+    transition: transform 0.3s ease;
+    z-index: -1;
+  }
+  .btn-enter:hover {
+    color: var(--cream);
+    border-color: var(--brown);
+  }
+  .btn-enter:hover::before {
+    transform: translateX(0);
+  }
+
+  .paw-prints {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    display: flex;
+    justify-content: space-around;
+    padding: 0 10px;
+  }
+
+  .paw {
+    font-size: 1.4rem;
+    animation: pawPrint 2s ease forwards;
+    opacity: 0;
+  }
+  .paw:nth-child(1) { animation-delay: 2s; }
+  .paw:nth-child(2) { animation-delay: 2.3s; }
+  .paw:nth-child(3) { animation-delay: 2.6s; }
+  .paw:nth-child(4) { animation-delay: 2.9s; }
+  .paw:nth-child(5) { animation-delay: 3.2s; }
+
+  /* ── STARS BACKGROUND ── */
+  .stars {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 0;
+    overflow: hidden;
+  }
+  .star {
+    position: absolute;
+    width: 3px;
+    height: 3px;
+    background: var(--gold);
+    border-radius: 50%;
+    animation: shimmer 3s ease-in-out infinite;
+  }
+
+  /* ── MAIN LAYOUT ── */
+  #main {
+    display: none;
+    min-height: 100vh;
+    position: relative;
+    z-index: 1;
+  }
+  #main.visible { display: block; }
+
+  .page-header {
+    text-align: center;
+    padding: 4rem 1rem 2rem;
+    position: relative;
+  }
+
+  .page-header::before {
+    content: '';
+    display: block;
+    width: 60px;
+    height: 2px;
+    background: var(--gold);
+    margin: 0 auto 2rem;
+  }
+
+  .header-eyebrow {
+    font-size: 0.8rem;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    color: var(--brown-light);
+    margin-bottom: 1rem;
+  }
+
+  .header-title {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: clamp(3rem, 8vw, 5rem);
+    font-style: italic;
+    color: var(--brown);
+    line-height: 1.1;
+  }
+
+  .header-dates {
+    margin-top: 1rem;
+    font-size: 1rem;
+    color: var(--brown-light);
+    letter-spacing: 3px;
+  }
+
+  .header-divider {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    max-width: 400px;
+    margin: 2rem auto;
+  }
+  .header-divider::before, .header-divider::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: linear-gradient(to right, transparent, var(--gold), transparent);
+  }
+
+  /* ── SECTION STYLES ── */
+  .section {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 3rem 1.5rem;
+  }
+
+  .section-title {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: 1.8rem;
+    font-style: italic;
+    color: var(--brown);
+    text-align: center;
+    margin-bottom: 0.5rem;
+  }
+
+  .section-sub {
+    text-align: center;
+    color: var(--brown-light);
+    font-size: 0.85rem;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 2.5rem;
+  }
+
+  /* ── CAROUSEL ── */
+  .carousel-wrapper {
+    position: relative;
+    overflow: hidden;
+    border-radius: 4px;
+  }
+
+  .carousel-track {
+    display: flex;
+    transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    gap: 20px;
+  }
+
+  .carousel-slide {
+    flex: 0 0 calc(33.333% - 14px);
+    min-width: calc(33.333% - 14px);
+  }
+
+  @media (max-width: 700px) {
+    .carousel-slide { flex: 0 0 90%; min-width: 90%; }
+  }
+
+  /* Retro photo frame */
+  .photo-frame {
+    background: #fff;
+    padding: 12px 12px 40px;
+    box-shadow: 
+      0 2px 8px rgba(0,0,0,0.12),
+      0 0 0 1px rgba(0,0,0,0.06),
+      inset 0 0 0 1px rgba(255,255,255,0.8);
+    transform: rotate(var(--rot, -1.5deg));
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    position: relative;
+  }
+  .photo-frame:hover {
+    transform: rotate(0deg) scale(1.03);
+    box-shadow: 0 8px 24px rgba(0,0,0,0.18), 0 0 0 1px rgba(0,0,0,0.06);
+    z-index: 2;
+  }
+  .photo-frame::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, rgba(255,255,255,0.15) 0%, transparent 50%);
+    pointer-events: none;
+  }
+
+  .photo-img {
+    width: 100%;
+    aspect-ratio: 4/3;
+    object-fit: cover;
+    display: block;
+    background: var(--warm);
+    position: relative;
+  }
+
+  .photo-placeholder {
+    width: 100%;
+    aspect-ratio: 4/3;
+    background: linear-gradient(135deg, var(--warm) 0%, var(--rose) 100%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    color: var(--brown-light);
+    font-size: 0.8rem;
+    letter-spacing: 1px;
+  }
+
+  .photo-caption {
+    margin-top: 8px;
+    font-family: 'Lora', serif;
+    font-style: italic;
+    font-size: 0.85rem;
+    color: var(--brown-light);
+    text-align: center;
+    min-height: 1.4em;
+  }
+
+  .carousel-btn {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    background: var(--cream);
+    border: 1.5px solid var(--rose);
+    color: var(--brown);
+    font-size: 1.2rem;
+    cursor: pointer;
+    z-index: 10;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  }
+  .carousel-btn:hover { background: var(--brown); color: var(--cream); border-color: var(--brown); }
+  .carousel-btn.prev { left: -22px; }
+  .carousel-btn.next { right: -22px; }
+
+  .carousel-dots {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    margin-top: 2rem;
+  }
+  .dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--rose);
+    transition: all 0.3s;
+    cursor: pointer;
+  }
+  .dot.active {
+    background: var(--brown);
+    transform: scale(1.3);
+  }
+
+  /* Upload area */
+  .upload-area {
+    border: 2px dashed var(--rose);
+    border-radius: 8px;
+    padding: 2.5rem;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.3s;
+    background: rgba(255,255,255,0.5);
+    margin-top: 2rem;
+  }
+  .upload-area:hover {
+    border-color: var(--brown);
+    background: rgba(255,255,255,0.8);
+  }
+  .upload-area input { display: none; }
+  .upload-icon { font-size: 2rem; margin-bottom: 0.5rem; }
+  .upload-text { color: var(--brown-light); font-size: 0.9rem; }
+  .upload-text strong { color: var(--brown); }
+
+  /* ── MEMORIAL SECTION ── */
+  .memorial-card {
+    background: #fff;
+    border: 1px solid var(--gold-light);
+    border-radius: 4px;
+    padding: 2.5rem;
+    position: relative;
+    box-shadow: 0 2px 16px rgba(0,0,0,0.06);
+  }
+  .memorial-card::before {
+    content: '"';
+    position: absolute;
+    top: -20px;
+    left: 24px;
+    font-family: 'Playfair Display', serif;
+    font-size: 6rem;
+    color: var(--gold-light);
+    line-height: 1;
+  }
+
+  .memorial-textarea {
+    width: 100%;
+    min-height: 280px;
+    border: none;
+    outline: none;
+    resize: vertical;
+    font-family: 'Lora', serif;
+    font-size: 1.05rem;
+    line-height: 1.9;
+    color: var(--ink);
+    background: transparent;
+    padding: 1rem 0 0;
+  }
+  .memorial-textarea::placeholder {
+    color: #c4b09a;
+    font-style: italic;
+  }
+
+  .save-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 1.5rem;
+    padding: 0.7rem 2rem;
+    background: var(--brown);
+    color: var(--cream);
+    border: none;
+    font-family: 'Lora', serif;
+    font-size: 0.95rem;
+    cursor: pointer;
+    border-radius: 50px;
+    transition: all 0.2s;
+    letter-spacing: 0.5px;
+  }
+  .save-btn:hover { background: var(--ink); transform: translateY(-1px); }
+  .save-btn:active { transform: scale(0.97); }
+
+  .saved-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    color: #7c9a6a;
+    font-size: 0.85rem;
+    margin-left: 12px;
+    opacity: 0;
+    transition: opacity 0.4s;
+  }
+  .saved-badge.show { opacity: 1; }
+
+  /* ── VIDEO SECTION ── */
+  .video-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 1.5rem;
+  }
+
+  .video-card {
+    background: #fff;
+    border: 1px solid var(--gold-light);
+    border-radius: 4px;
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+  .video-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+  }
+
+  .video-card video {
+    width: 100%;
+    max-height: 200px;
+    object-fit: cover;
+    display: block;
+    background: var(--warm);
+  }
+
+  .video-meta {
+    padding: 0.8rem 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .video-name {
+    font-size: 0.85rem;
+    color: var(--brown);
+    font-style: italic;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    flex: 1;
+  }
+  .delete-btn {
+    background: none;
+    border: none;
+    color: #c4a090;
+    font-size: 1rem;
+    cursor: pointer;
+    padding: 2px 4px;
+    transition: color 0.2s;
+    flex-shrink: 0;
+  }
+  .delete-btn:hover { color: #b05040; }
+
+  .video-upload-area {
+    border: 2px dashed var(--rose);
+    border-radius: 8px;
+    padding: 2rem;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.3s;
+    background: rgba(255,255,255,0.5);
+    margin-top: 1.5rem;
+  }
+  .video-upload-area:hover { border-color: var(--brown); background: rgba(255,255,255,0.8); }
+  .video-upload-area input { display: none; }
+
+  /* ── FOOTER ── */
+  footer {
+    text-align: center;
+    padding: 3rem 1rem 4rem;
+    color: var(--brown-light);
+    font-style: italic;
+    font-size: 0.9rem;
+    border-top: 1px solid var(--gold-light);
+    margin-top: 2rem;
+  }
+  footer .paw-footer {
+    font-size: 1.5rem;
+    display: block;
+    margin-bottom: 0.8rem;
+  }
+
+  /* Decorative corners */
+  .corner-decor {
+    position: absolute;
+    width: 40px;
+    height: 40px;
+    border-color: var(--gold-light);
+    border-style: solid;
+    opacity: 0.7;
+  }
+  .corner-tl { top: 12px; left: 12px; border-width: 2px 0 0 2px; }
+  .corner-tr { top: 12px; right: 12px; border-width: 2px 2px 0 0; }
+  .corner-bl { bottom: 12px; left: 12px; border-width: 0 0 2px 2px; }
+  .corner-br { bottom: 12px; right: 12px; border-width: 0 2px 2px 0; }
+
+  .ornament { color: var(--gold); font-size: 1rem; }
+
+  /* Nav tabs */
+  .tabs {
+    display: flex;
+    justify-content: center;
+    gap: 0;
+    border-bottom: 1px solid var(--gold-light);
+    margin-bottom: 3rem;
+  }
+  .tab {
+    padding: 0.8rem 1.8rem;
+    border: none;
+    background: none;
+    font-family: 'Lora', serif;
+    font-size: 0.9rem;
+    color: var(--brown-light);
+    cursor: pointer;
+    position: relative;
+    transition: color 0.2s;
+    letter-spacing: 0.5px;
+  }
+  .tab::after {
+    content: '';
+    position: absolute;
+    bottom: -1px;
+    left: 0; right: 0;
+    height: 2px;
+    background: var(--brown);
+    transform: scaleX(0);
+    transition: transform 0.3s;
+  }
+  .tab.active { color: var(--brown); font-weight: 500; }
+  .tab.active::after { transform: scaleX(1); }
+</style>
+</head>
+<body>
+
+<!-- Stars -->
+<div class="stars" id="stars"></div>
+
+<!-- ════════ INTRO SCREEN ════════ -->
+<div id="intro">
+  <div class="snoopy-scene">
+
+    <!-- Perrito izquierda (Snoopy style SVG) -->
+    <div class="dog-left">
+      <svg width="90" height="90" viewBox="0 0 90 90" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <!-- Snoopy simple style dog -->
+        <ellipse cx="45" cy="62" rx="28" ry="18" fill="#fff" stroke="#3d2b1f" stroke-width="2"/>
+        <circle cx="45" cy="36" r="18" fill="#fff" stroke="#3d2b1f" stroke-width="2"/>
+        <!-- ears -->
+        <ellipse cx="32" cy="28" rx="9" ry="14" fill="#c9886e" stroke="#3d2b1f" stroke-width="2" transform="rotate(-15 32 28)"/>
+        <ellipse cx="58" cy="28" rx="9" ry="14" fill="#c9886e" stroke="#3d2b1f" stroke-width="2" transform="rotate(15 58 28)"/>
+        <!-- face -->
+        <circle cx="38" cy="34" r="3" fill="#3d2b1f"/>
+        <circle cx="52" cy="34" r="3" fill="#3d2b1f"/>
+        <ellipse cx="45" cy="42" rx="7" ry="5" fill="#e8c4b8" stroke="#3d2b1f" stroke-width="1.5"/>
+        <circle cx="45" cy="40" r="3" fill="#c9886e"/>
+        <!-- smile -->
+        <path d="M40 45 Q45 49 50 45" stroke="#3d2b1f" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+        <!-- legs -->
+        <ellipse cx="30" cy="76" rx="7" ry="5" fill="#fff" stroke="#3d2b1f" stroke-width="2"/>
+        <ellipse cx="45" cy="78" rx="7" ry="5" fill="#fff" stroke="#3d2b1f" stroke-width="2"/>
+        <ellipse cx="60" cy="76" rx="7" ry="5" fill="#fff" stroke="#3d2b1f" stroke-width="2"/>
+        <!-- tail -->
+        <path d="M73 62 Q85 50 80 40" stroke="#3d2b1f" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+        <!-- heart -->
+        <text x="72" y="38" font-size="12" fill="#e8c4b8">♥</text>
+      </svg>
+    </div>
+
+    <!-- Perrito centro -->
+    <div class="dog-center">
+      <svg width="70" height="70" viewBox="0 0 90 90" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <ellipse cx="45" cy="62" rx="24" ry="16" fill="#fff" stroke="#3d2b1f" stroke-width="2"/>
+        <circle cx="45" cy="36" r="16" fill="#fff" stroke="#3d2b1f" stroke-width="2"/>
+        <ellipse cx="33" cy="26" rx="8" ry="13" fill="#c9886e" stroke="#3d2b1f" stroke-width="2" transform="rotate(-10 33 26)"/>
+        <ellipse cx="57" cy="26" rx="8" ry="13" fill="#c9886e" stroke="#3d2b1f" stroke-width="2" transform="rotate(10 57 26)"/>
+        <circle cx="40" cy="34" r="2.5" fill="#3d2b1f"/>
+        <circle cx="50" cy="34" r="2.5" fill="#3d2b1f"/>
+        <ellipse cx="45" cy="41" rx="6" ry="4" fill="#e8c4b8" stroke="#3d2b1f" stroke-width="1.5"/>
+        <circle cx="45" cy="39" r="2.5" fill="#c9886e"/>
+        <path d="M41 44 Q45 48 49 44" stroke="#3d2b1f" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+        <ellipse cx="32" cy="74" rx="6" ry="4" fill="#fff" stroke="#3d2b1f" stroke-width="2"/>
+        <ellipse cx="45" cy="76" rx="6" ry="4" fill="#fff" stroke="#3d2b1f" stroke-width="2"/>
+        <ellipse cx="58" cy="74" rx="6" ry="4" fill="#fff" stroke="#3d2b1f" stroke-width="2"/>
+        <path d="M69 62 Q78 52 74 44" stroke="#3d2b1f" stroke-width="2" fill="none" stroke-linecap="round"/>
+        <!-- star on head -->
+        <text x="41" y="18" font-size="11" fill="#c9a55a">✦</text>
+      </svg>
+    </div>
+
+    <!-- Perrito derecha -->
+    <div class="dog-right">
+      <svg width="90" height="90" viewBox="0 0 90 90" fill="none" xmlns="http://www.w3.org/2000/svg" style="transform: scaleX(-1)">
+        <ellipse cx="45" cy="62" rx="28" ry="18" fill="#fff" stroke="#3d2b1f" stroke-width="2"/>
+        <circle cx="45" cy="36" r="18" fill="#fff" stroke="#3d2b1f" stroke-width="2"/>
+        <ellipse cx="32" cy="28" rx="9" ry="14" fill="#a67c5b" stroke="#3d2b1f" stroke-width="2" transform="rotate(-15 32 28)"/>
+        <ellipse cx="58" cy="28" rx="9" ry="14" fill="#a67c5b" stroke="#3d2b1f" stroke-width="2" transform="rotate(15 58 28)"/>
+        <circle cx="38" cy="34" r="3" fill="#3d2b1f"/>
+        <circle cx="52" cy="34" r="3" fill="#3d2b1f"/>
+        <ellipse cx="45" cy="42" rx="7" ry="5" fill="#e8c4b8" stroke="#3d2b1f" stroke-width="1.5"/>
+        <circle cx="45" cy="40" r="3" fill="#c9886e"/>
+        <path d="M40 45 Q45 49 50 45" stroke="#3d2b1f" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+        <ellipse cx="30" cy="76" rx="7" ry="5" fill="#fff" stroke="#3d2b1f" stroke-width="2"/>
+        <ellipse cx="45" cy="78" rx="7" ry="5" fill="#fff" stroke="#3d2b1f" stroke-width="2"/>
+        <ellipse cx="60" cy="76" rx="7" ry="5" fill="#fff" stroke="#3d2b1f" stroke-width="2"/>
+        <path d="M73 62 Q85 50 80 40" stroke="#3d2b1f" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+        <text x="72" y="38" font-size="12" fill="#e8c4b8">♥</text>
+      </svg>
+    </div>
+
+    <!-- Paw prints -->
+    <div class="paw-prints">
+      <span class="paw">🐾</span>
+      <span class="paw">🐾</span>
+      <span class="paw">🐾</span>
+      <span class="paw">🐾</span>
+      <span class="paw">🐾</span>
+    </div>
+  </div>
+
+  <h1 class="intro-title">Para Tita</h1>
+  <p class="intro-subtitle">14 años de amor incondicional</p>
+
+  <div class="hearts-row">
+    <span class="heart">♥</span>
+    <span class="heart">♥</span>
+    <span class="heart">♥</span>
+  </div>
+
+  <button class="btn-enter" id="btn-enter">con mucho amor ♥</button>
+</div>
+
+
+<!-- ════════ MAIN MEMORIAL ════════ -->
+<div id="main">
+
+  <header class="page-header">
+    <div class="corner-decor corner-tl"></div>
+    <div class="corner-decor corner-tr"></div>
+
+    <p class="header-eyebrow">en su memoria</p>
+    <h1 class="header-title">Tita</h1>
+    <p class="header-dates">✦ &nbsp; 14 años de amor incondicional &nbsp; ✦</p>
+
+    <div class="header-divider">
+      <span class="ornament">🐾</span>
+    </div>
+
+    <div class="corner-decor corner-bl"></div>
+    <div class="corner-decor corner-br"></div>
+  </header>
+
+  <!-- Tabs -->
+  <div class="section" style="padding-top:0; padding-bottom:0;">
+    <nav class="tabs">
+      <button class="tab active" data-tab="gallery">Galería</button>
+      <button class="tab" data-tab="memorial">Memorial</button>
+      <button class="tab" data-tab="videos">Videos</button>
+    </nav>
+  </div>
+
+  <!-- ── GALLERY TAB ── -->
+  <div id="tab-gallery" class="section tab-content">
+    <h2 class="section-title">Momentos eternos</h2>
+    <p class="section-sub">Agrega tus fotos favoritas de Tita</p>
+
+    <div class="carousel-wrapper" id="carousel-wrapper">
+      <div class="carousel-track" id="carousel-track">
+        <!-- slides rendered by JS -->
+      </div>
+      <button class="carousel-btn prev" id="prev-btn">‹</button>
+      <button class="carousel-btn next" id="next-btn">›</button>
+    </div>
+
+    <div class="carousel-dots" id="carousel-dots"></div>
+
+    <!-- Upload -->
+    <div class="upload-area" id="photo-upload-area">
+      <input type="file" id="photo-input" accept="image/*" multiple />
+      <div class="upload-icon">📷</div>
+      <p class="upload-text"><strong>Haz clic</strong> o arrastra tus fotos aquí</p>
+      <p class="upload-text" style="margin-top:4px; font-size:0.8rem;">JPG, PNG, WebP — las que quieras</p>
+    </div>
+  </div>
+
+  <!-- ── MEMORIAL TAB ── -->
+  <div id="tab-memorial" class="section tab-content" style="display:none">
+    <h2 class="section-title">Sus palabras</h2>
+    <p class="section-sub">Escribe lo que Tita significó para ti</p>
+
+    <div class="memorial-card" style="position:relative">
+      <textarea
+        class="memorial-textarea"
+        id="memorial-text"
+        placeholder="Querida Tita...&#10;&#10;Escribí aquí todo lo que quieras decirle, lo que significó para vos, los recuerdos más lindos, las cosas que más extrañás..."
+      ></textarea>
+    </div>
+
+    <div style="display:flex; align-items:center; margin-top:1rem; flex-wrap:wrap; gap:8px;">
+      <button class="save-btn" id="save-memorial-btn">
+        <span>💛</span> Guardar memorial
+      </button>
+      <span class="saved-badge" id="saved-badge">✓ Guardado</span>
+    </div>
+  </div>
+
+  <!-- ── VIDEOS TAB ── -->
+  <div id="tab-videos" class="section tab-content" style="display:none">
+    <h2 class="section-title">Sus momentos en video</h2>
+    <p class="section-sub">Agrega videos de Tita que quieras guardar aquí</p>
+
+    <div class="video-grid" id="video-grid">
+      <!-- rendered by JS -->
+    </div>
+
+    <div class="video-upload-area" id="video-upload-area">
+      <input type="file" id="video-input" accept="video/*" multiple />
+      <div class="upload-icon">🎬</div>
+      <p class="upload-text"><strong>Haz clic</strong> para agregar videos</p>
+      <p class="upload-text" style="margin-top:4px; font-size:0.8rem;">MP4, MOV, WebM</p>
+    </div>
+  </div>
+
+  <footer>
+    <span class="paw-footer">🐾</span>
+    "Las huellas que dejan en nuestro corazón nunca desaparecen."
+    <br/><br/>
+    <span style="font-size:0.8rem; letter-spacing:2px; font-style:normal; text-transform:uppercase;">Con amor, siempre</span>
+  </footer>
+</div>
+
+
+<script>
+// ════════════════════════════════
+// STORAGE HELPERS (localStorage)
+// ════════════════════════════════
+const STORAGE_KEY = 'tita_memorial_v1';
+
+function loadData() {
+  try {
+    const raw = localStorage.getItem(STORAGE_KEY);
+    return raw ? JSON.parse(raw) : { photos: [], memorial: '', videos: [] };
+  } catch(e) { return { photos: [], memorial: '', videos: [] }; }
+}
+
+function saveData(data) {
+  try { localStorage.setItem(STORAGE_KEY, JSON.stringify(data)); } catch(e) {}
+}
+
+let appData = loadData();
+
+// ════════════════════════════════
+// STARS
+// ════════════════════════════════
+const starsEl = document.getElementById('stars');
+for (let i = 0; i < 30; i++) {
+  const s = document.createElement('div');
+  s.className = 'star';
+  s.style.left = Math.random() * 100 + '%';
+  s.style.top = Math.random() * 100 + '%';
+  s.style.animationDelay = Math.random() * 4 + 's';
+  s.style.animationDuration = (2 + Math.random() * 3) + 's';
+  starsEl.appendChild(s);
+}
+
+// ════════════════════════════════
+// INTRO → MAIN
+// ════════════════════════════════
+document.getElementById('btn-enter').addEventListener('click', () => {
+  document.getElementById('intro').classList.add('fade-out');
+  setTimeout(() => {
+    document.getElementById('intro').style.display = 'none';
+    const main = document.getElementById('main');
+    main.classList.add('visible');
+    initApp();
+  }, 800);
+});
+
+// ════════════════════════════════
+// TABS
+// ════════════════════════════════
+document.querySelectorAll('.tab').forEach(tab => {
+  tab.addEventListener('click', () => {
+    document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+    document.querySelectorAll('.tab-content').forEach(tc => tc.style.display = 'none');
+    tab.classList.add('active');
+    document.getElementById('tab-' + tab.dataset.tab).style.display = 'block';
+  });
+});
+
+// ════════════════════════════════
+// CAROUSEL
+// ════════════════════════════════
+let currentSlide = 0;
+let totalSlides = 0;
+
+function slidesPerView() {
+  return window.innerWidth < 700 ? 1 : 3;
+}
+
+function renderCarousel() {
+  const track = document.getElementById('carousel-track');
+  const dotsEl = document.getElementById('carousel-dots');
+  const photos = appData.photos;
+
+  if (photos.length === 0) {
+    track.innerHTML = `
+      <div class="carousel-slide">
+        <div class="photo-frame" style="--rot: -1deg">
+          <div class="photo-placeholder"><span style="font-size:2rem">🐾</span><span>Tus fotos de Tita aparecerán aquí</span></div>
+          <p class="photo-caption">añade tu primera foto</p>
+        </div>
+      </div>`;
+    dotsEl.innerHTML = '';
+    return;
+  }
+
+  const rots = [-2, 1.5, -1, 2.5, -0.5, 1, -2.5, 0.8];
+  track.innerHTML = photos.map((p, i) => `
+    <div class="carousel-slide">
+      <div class="photo-frame" style="--rot: ${rots[i % rots.length]}deg">
+        <img class="photo-img" src="${p.src}" alt="Foto de Tita" loading="lazy" />
+        <p class="photo-caption">${p.caption || '🐾'}</p>
+        <button onclick="deletePhoto(${i})" style="position:absolute;top:6px;right:6px;background:rgba(255,255,255,0.8);border:none;border-radius:50%;width:24px;height:24px;font-size:0.9rem;cursor:pointer;display:flex;align-items:center;justify-content:center;" title="Eliminar">×</button>
+      </div>
+    </div>
+  `).join('');
+
+  const spv = slidesPerView();
+  totalSlides = Math.max(0, photos.length - spv + 1);
+  currentSlide = Math.min(currentSlide, Math.max(0, totalSlides - 1));
+
+  dotsEl.innerHTML = '';
+  for (let i = 0; i < Math.max(1, totalSlides); i++) {
+    const dot = document.createElement('button');
+    dot.className = 'dot' + (i === currentSlide ? ' active' : '');
+    dot.addEventListener('click', () => { currentSlide = i; updateCarousel(); });
+    dotsEl.appendChild(dot);
+  }
+  updateCarousel();
+}
+
+function updateCarousel() {
+  const track = document.getElementById('carousel-track');
+  const slides = track.querySelectorAll('.carousel-slide');
+  if (!slides.length) return;
+  const slideW = slides[0].offsetWidth + 20;
+  track.style.transform = `translateX(-${currentSlide * slideW}px)`;
+  document.querySelectorAll('.dot').forEach((d, i) => {
+    d.classList.toggle('active', i === currentSlide);
+  });
+}
+
+document.getElementById('prev-btn').addEventListener('click', () => {
+  currentSlide = Math.max(0, currentSlide - 1);
+  updateCarousel();
+});
+document.getElementById('next-btn').addEventListener('click', () => {
+  currentSlide = Math.min(Math.max(0, totalSlides - 1), currentSlide + 1);
+  updateCarousel();
+});
+
+window.addEventListener('resize', () => { renderCarousel(); });
+
+// Photo upload
+document.getElementById('photo-upload-area').addEventListener('click', () => {
+  document.getElementById('photo-input').click();
+});
+document.getElementById('photo-input').addEventListener('change', (e) => {
+  const files = Array.from(e.target.files);
+  files.forEach(file => {
+    const reader = new FileReader();
+    reader.onload = (ev) => {
+      appData.photos.push({ src: ev.target.result, caption: '' });
+      saveData(appData);
+      renderCarousel();
+    };
+    reader.readAsDataURL(file);
+  });
+  e.target.value = '';
+});
+
+// Drag and drop
+const uploadArea = document.getElementById('photo-upload-area');
+uploadArea.addEventListener('dragover', e => { e.preventDefault(); uploadArea.style.borderColor = 'var(--brown)'; });
+uploadArea.addEventListener('dragleave', () => { uploadArea.style.borderColor = 'var(--rose)'; });
+uploadArea.addEventListener('drop', e => {
+  e.preventDefault();
+  uploadArea.style.borderColor = 'var(--rose)';
+  Array.from(e.dataTransfer.files).filter(f => f.type.startsWith('image/')).forEach(file => {
+    const reader = new FileReader();
+    reader.onload = ev => {
+      appData.photos.push({ src: ev.target.result, caption: '' });
+      saveData(appData);
+      renderCarousel();
+    };
+    reader.readAsDataURL(file);
+  });
+});
+
+window.deletePhoto = function(index) {
+  appData.photos.splice(index, 1);
+  saveData(appData);
+  renderCarousel();
+};
+
+// ════════════════════════════════
+// MEMORIAL TEXT
+// ════════════════════════════════
+function initMemorial() {
+  const ta = document.getElementById('memorial-text');
+  ta.value = appData.memorial || '';
+
+  document.getElementById('save-memorial-btn').addEventListener('click', () => {
+    appData.memorial = ta.value;
+    saveData(appData);
+    const badge = document.getElementById('saved-badge');
+    badge.classList.add('show');
+    setTimeout(() => badge.classList.remove('show'), 2500);
+  });
+
+  // Auto-save on typing (debounced)
+  let timer;
+  ta.addEventListener('input', () => {
+    clearTimeout(timer);
+    timer = setTimeout(() => {
+      appData.memorial = ta.value;
+      saveData(appData);
+    }, 1500);
+  });
+}
+
+// ════════════════════════════════
+// VIDEOS
+// ════════════════════════════════
+function renderVideos() {
+  const grid = document.getElementById('video-grid');
+  if (!appData.videos || appData.videos.length === 0) {
+    grid.innerHTML = `<p style="color:var(--brown-light); font-style:italic; font-size:0.95rem; grid-column:1/-1; text-align:center; padding:1rem 0;">Tus videos de Tita aparecerán aquí 🎬</p>`;
+    return;
+  }
+  grid.innerHTML = appData.videos.map((v, i) => `
+    <div class="video-card">
+      <video src="${v.src}" controls preload="metadata"></video>
+      <div class="video-meta">
+        <span class="video-name">🎬 ${v.name}</span>
+        <button class="delete-btn" onclick="deleteVideo(${i})" title="Eliminar">✕</button>
+      </div>
+    </div>
+  `).join('');
+}
+
+document.getElementById('video-upload-area').addEventListener('click', () => {
+  document.getElementById('video-input').click();
+});
+document.getElementById('video-input').addEventListener('change', (e) => {
+  const files = Array.from(e.target.files);
+  files.forEach(file => {
+    const reader = new FileReader();
+    reader.onload = ev => {
+      if (!appData.videos) appData.videos = [];
+      appData.videos.push({ src: ev.target.result, name: file.name });
+      saveData(appData);
+      renderVideos();
+    };
+    reader.readAsDataURL(file);
+  });
+  e.target.value = '';
+});
+
+window.deleteVideo = function(index) {
+  appData.videos.splice(index, 1);
+  saveData(appData);
+  renderVideos();
+};
+
+// ════════════════════════════════
+// INIT
+// ════════════════════════════════
+function initApp() {
+  renderCarousel();
+  initMemorial();
+  renderVideos();
+}
+</script>
+</body>
+</html>
